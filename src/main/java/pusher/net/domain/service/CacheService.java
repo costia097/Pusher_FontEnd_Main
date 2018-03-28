@@ -27,7 +27,7 @@ public class CacheService {
     public void init() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders authHeaders = new HttpHeaders();
-        authHeaders.set("Authorization", "Basic YXdkYXdkOjEyMzMyMQ==");
+        authHeaders.set("Authorization", "Basic YXdkYXdkOjEyMw==");
         HttpEntity<?> requestHttp = new HttpEntity<>(authHeaders);
         ResponseEntity<UsersLoginEmailsDto> responseEntity = restTemplate.exchange("http://localhost:8080/getAllRegistrationData", HttpMethod.GET, requestHttp, UsersLoginEmailsDto.class);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -50,6 +50,10 @@ public class CacheService {
     public List<String> getAllEmail() {
         List<String> allEmails = cacheLoginEmail.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
         return allEmails;
+    }
+
+    public void addLoginEmailToCache(String login, String email) {
+        cacheLoginEmail.put(login, email);
     }
 
     void addToCache(String sessionId, HttpHeaders httpHeaders) {

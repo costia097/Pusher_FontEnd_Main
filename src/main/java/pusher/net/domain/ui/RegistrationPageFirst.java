@@ -121,6 +121,7 @@ public class RegistrationPageFirst extends UI {
                     HttpEntity<?> emailRequest = new HttpEntity<>(emailHeaders);
                     ResponseEntity<String> responseEntity1 = restTemplate.postForEntity("http://localhost:8080/person/sendEmail", emailRequest, String.class);
                     getPage().setLocation("/emailSend");
+                    cacheService.addLoginEmailToCache(login, email);
                 }
             }
         });
